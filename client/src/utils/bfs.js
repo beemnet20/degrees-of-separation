@@ -75,7 +75,7 @@ export default function shortestPath(source, target, data) {
   while (true) {
     // If nothing left in frontier, then no path
     if (frontier.isEmpty()) {
-      return null;
+      return {success:false};
     }
 
     // Choose a node from the frontier
@@ -95,7 +95,7 @@ export default function shortestPath(source, target, data) {
             node = node.parent;
           }
           shortestPath.reverse();
-          return shortestPath;
+          return {success:true, solution:shortestPath};
         }
         let child = new Node(state, node, action);
         frontier.add(child);
