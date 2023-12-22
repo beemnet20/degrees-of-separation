@@ -15,8 +15,13 @@ function DegreeOfSeparation() {
 
   React.useEffect(() => {
     if (inputs.from && inputs.to) {
-      setSolution(shortestPath(inputs.from, inputs.to, data));
-      console.log(solution);
+      const bfs_path = shortestPath(inputs.from, inputs.to, data)
+      if (bfs_path.success){
+        setSolution(bfs_path.solution);
+        console.log(solution);
+      }else{
+        console.log("no solution found")
+      }
     }
   }, [inputs]);
 
