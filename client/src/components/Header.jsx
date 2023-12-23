@@ -11,92 +11,66 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 
 export default function Header() {
   return (
-      <header >
-        <Container>
-          <Grid container spacing={2} padding={2}>
-            <Grid item xs={0} sm={3} lg={2}>
-              <SizeAvatars src={img} label='Beemnet Workeneh' size='xlg' />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Stack spacing={1} direction='column'>
-                <Chip
-                  label={
-                    <strong style={{ textAlign: 'left' }}>
-                      Beemnet Workeneh
-                    </strong>
-                  }
-                  variant='outlined'
-                  sx={{ width: '50%', minWidth:"200px", justifyContent: 'flex-start' }}
-                />
-                <Chip
-                  label={<strong>Software Engineer</strong>}
-                  variant='outlined'
-                  sx={{ width: '40%',minWidth:"200px", justifyContent: 'flex-start' }}
-                />
-                <Stack direction='row' spacing={1}>
-                  <Chip
-                    variant='outlined'
-                    label={
-                      <strong>
-                        <a
-                          href='https://www.linkedin.com/in/beemnet-workeneh-25b579b3/'
-                          target='_blank'
-                          rel='noreferrer'
-                        >
-                          <LinkedInIcon />
-                        </a>
-                      </strong>
-                    }
-                    sx={{ minWidth: '40px', maxWidth: '60px' }}
-                  />
-                  <Chip
-                    variant='outlined'
-                    label={
-                      <strong>
-                        <a
-                          href='mailto:beemnet17@gmail.com'
-                          target='_blank'
-                          rel='noreferrer'
-                        >
-                          <EmailIcon />
-                        </a>
-                      </strong>
-                    }
-                    sx={{ minWidth: '40px', maxWidth: '60px' }}
-                  />
-                  <Chip
-                    variant='outlined'
-                    label={
-                      <strong>
-                        <a href='tel:+12063550608' rel='noreferrer'>
-                          <SmartphoneIcon />
-                        </a>
-                      </strong>
-                    }
-                    sx={{ minWidth: '40px', maxWidth: '60px' }}
-                  />
-                </Stack>
-                <Chip
-                  variant='outlined'
-                  sx={{ width: '20%', minWidth:"100px", justifyContent: 'flex-start' }}
-                  label={
-                    <strong>
-                      <a
-                        rel='noreferrer'
-                        href='https://beemnet17.wixsite.com/beemnetworkeneh'
-                        target='_blank'
-                      >
-                        Portfolio
-                      </a>
-                    </strong>
-                  }
-                ></Chip>
-              </Stack>
-            </Grid>
+    <header>
+      <Container>
+        <Grid container spacing={1} padding={1}> {/* Reduced spacing and padding */}
+          <Grid item xs={0} sm={2} lg={1}> {/* Adjusted grid size */}
+            <SizeAvatars src={img} label='Beemnet Workeneh' size='lg' /> {/* Adjusted avatar size */}
           </Grid>
-        </Container>
-      </header>
+          <Grid item xs={12} lg={5}> {/* Adjusted grid size */}
+            <Stack spacing={0.5} direction='column'> {/* Reduced stack spacing */}
+              <Chip
+                label={<strong>Beemnet Workeneh</strong>}
+                variant='outlined'
+                sx={{ width: '50%', minWidth: '150px', justifyContent: 'flex-start' }} 
+              />
+              <Chip
+                label={<strong>Software Engineer</strong>}
+                variant='outlined'
+                sx={{ width: '40%', minWidth: '150px', justifyContent: 'flex-start' }} 
+              />
+              <Stack direction='row' spacing={0.5}> {/* Reduced icon spacing */}
+                {/* Icons Chip */}
+                <Chip
+                  variant='outlined'
+                  label={<LinkedInIcon />} // Removed <strong> and <a> for simplicity
+                  sx={{ minWidth: '35px', maxWidth: '50px',cursor: 'pointer' }} // Adjusted size
+                  component="a"
+                  href='https://www.linkedin.com/in/beemnet-workeneh-25b579b3/'
+                  target='_blank'
+                  rel='noreferrer'
+                />
+                <Chip
+                  variant='outlined'
+                  label={<EmailIcon />}
+                  sx={{ minWidth: '35px', maxWidth: '50px',cursor: 'pointer' }}
+                  component="a"
+                  href='mailto:beemnet17@gmail.com'
+                  target='_blank'
+                  rel='noreferrer'
+                />
+                <Chip
+                  variant='outlined'
+                  label={<SmartphoneIcon />}
+                  sx={{ minWidth: '35px', maxWidth: '50px',cursor: 'pointer' }}
+                  component="a"
+                  href='tel:+12063550608'
+                  rel='noreferrer'
+                />
+              </Stack>
+              <Chip
+                variant='outlined'
+                sx={{ width: '20%', minWidth: '80px', justifyContent: 'flex-start' , cursor: 'pointer'}} // Adjusted minWidth
+                label={<strong>Portfolio</strong>}
+                component="a"
+                href='https://beemnet17.wixsite.com/beemnetworkeneh'
+                target='_blank'
+                rel='noreferrer'
+              />
+            </Stack>
+          </Grid>
+        </Grid>
+      </Container>
+    </header>
   );
 }
-
-

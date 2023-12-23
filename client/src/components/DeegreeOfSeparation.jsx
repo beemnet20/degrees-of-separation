@@ -106,7 +106,7 @@ function DegreeOfSeparation() {
       </div>
 
       <Paper>
-        <ActorsNetwork data={data} from={inputs.from} to={inputs.to} />
+        <ActorsNetwork data={data} from={inputs.from} to={inputs.to} solution={solution} />
       </Paper>
     </Container>
   );

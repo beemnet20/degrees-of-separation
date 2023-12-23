@@ -105,13 +105,13 @@ const data = {
             "img": "https://image.tmdb.org/t/p/w500/3IvlZd2PpT3Tuxy8lr6ymWLyoNU.jpg",
             "group": 1
         },
-        {
-            "id": "914612",
-            "name": "Emma Watson",
-            "birth": "1990",
-            "img": "https://image.tmdb.org/t/p/w500/tvPPRGzAzdQFhlKzLbMO1EpuTJI.jpg",
-            "group": 1
-        }
+        // {
+        //     "id": "914612",
+        //     "name": "Emma Watson",
+        //     "birth": "1990",
+        //     "img": "https://image.tmdb.org/t/p/w500/tvPPRGzAzdQFhlKzLbMO1EpuTJI.jpg",
+        //     "group": 1
+        // }
     ],
     "links": [
         {
