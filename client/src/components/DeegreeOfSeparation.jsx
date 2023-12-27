@@ -29,6 +29,13 @@ function DegreeOfSeparation() {
     <Container
       sx={{ justifyContent: 'center', alignItems: 'center', marginTop: 2 }}
     >
+      <h1 style={{color:"#330867"}}>Degrees of Separation: Data Structures and Algorithms Visualized</h1>
+      <p>You've likely heard of <a href='https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon' target='_blank'>Six Degrees of Kevin Bacon</a>,
+      A game in which an arbitrarily chosen actor's degree of separation is found via the movies they've acted in. Degrees of separation
+      is also a great way to learn some of the basic elements of data structures and algorithms. </p>
+      <p>First, lets take a look at the implemented degrees of separation finder. Select actors' names and 
+        see their degrees of separation. 
+      </p>
       <div style={{ margin: '0 auto' }}>
         <FormControl sx={{ m: 1, minWidth: 300, height: '50px' }} size='small'>
           <InputLabel id='from-label'>From</InputLabel>
