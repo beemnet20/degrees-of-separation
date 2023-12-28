@@ -14,12 +14,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import shortestPath from '../utils/bfs';
 import ActorChip from './ActorChip';
 
 function DegreeOfSeparation() {
   const [inputs, setInputs] = useState({ from: '', to: '' });
-  const [solution, setSolution] = useState(null);
   const [data, setData] = useState(smallData);
   const [dataType, setDataType] = useState('small');
 
@@ -27,29 +25,15 @@ function DegreeOfSeparation() {
     if (newDataType !== null && newDataType !== dataType) {
       setDataType(newDataType);
       setInputs({ from: '', to: '' });
-      setSolution(null);
     }
   };
 
   React.useEffect(() => {
     const newData = dataType === 'small' ? smallData : largeData;
     setData(newData);
-    console.log(dataType);
-    console.log(data);
   }, [dataType]);
 
-  React.useEffect(() => {
-    if (inputs.from && inputs.to) {
-      const bfs_path = shortestPath(inputs.from, inputs.to, data);
-      if (bfs_path.success) {
-        setSolution(bfs_path.solution);
-        console.log(solution);
-      } else {
-        setSolution(null);
-        console.log('no solution found');
-      }
-    }
-  }, [inputs, data]);
+
 
   return (
     <Container
@@ -59,7 +43,7 @@ function DegreeOfSeparation() {
         Degrees of Separation: Data Structures and Algorithms Visualized
       </h1>
       <p>
-        You've likely heard of
+        You've likely heard of{' '}
         <a
           href='https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon'
           target='_blank'
@@ -99,10 +83,7 @@ function DegreeOfSeparation() {
           </ToggleButtonGroup>
         </Grid>
         <Grid item>
-          <FormControl
-            sx={{ m: 1, minWidth: 300, height: '50px' }}
-            size='small'
-          >
+          <FormControl sx={{ minWidth: 300 }} size='small'>
             <InputLabel id='from-label'>From</InputLabel>
             <Select
               sx={{ borderRadius: '15px' }}
@@ -121,6 +102,17 @@ function DegreeOfSeparation() {
               }}
             >
               {data.nodes
+                .sort((a, b) => {
+                  const nameA = a.name.toUpperCase(); 
+                  const nameB = b.name.toUpperCase(); 
+                  if (nameA < nameB) {
+                    return -1;
+                  }
+                  if (nameA > nameB) {
+                    return 1;
+                  }
+                  return 0;
+                })
                 .filter((node) => node.id !== inputs.to)
                 .map((node) => {
                   return (
@@ -134,7 +126,7 @@ function DegreeOfSeparation() {
         </Grid>
 
         <Grid item>
-          <FormControl sx={{ m: 1, minWidth: 300 }} size='small'>
+          <FormControl sx={{ minWidth: 300 }} size='small'>
             <InputLabel id='to-label'>To</InputLabel>
             <Select
               sx={{ borderRadius: '15px' }}
@@ -153,6 +145,17 @@ function DegreeOfSeparation() {
               }}
             >
               {data.nodes
+                .sort((a, b) => {
+                  const nameA = a.name.toUpperCase(); 
+                  const nameB = b.name.toUpperCase(); 
+                  if (nameA < nameB) {
+                    return -1;
+                  }
+                  if (nameA > nameB) {
+                    return 1;
+                  }
+                  return 0;
+                })
                 .filter((node) => node.id !== inputs.from)
                 .map((node) => {
                   return (
@@ -172,7 +175,6 @@ function DegreeOfSeparation() {
           data={dataType === 'small' ? smallData : largeData}
           from={inputs.from}
           to={inputs.to}
-          solution={solution}
         />
       </Paper>
     </Container>

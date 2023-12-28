@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Paper, Container, Grid} from '@mui/material';
 import LinkDisplay from './LinkDisplay';
+import shortestPath from '../utils/bfs';
 
 function drag(simulationRef) {
   function dragstarted(event, d) {
@@ -29,13 +30,27 @@ function drag(simulationRef) {
 }
 
 export default function ActorsNetwork(props) {
-  const { data, from, to, solution } = props;
+  const { data, from, to } = props;
+  const [solution, setSolution] = useState(null)
   const ref = useRef(null);
   const svg = useRef(null);
   const simulationRef = useRef(null);
-  const width = 600;
+  const width = 700;
   const height = 600;
   const nodeRadius = 25;
+
+  useEffect(() => {
+    if (from && to) {
+      const bfs_path = shortestPath(from, to, data);
+      if (bfs_path.success) {
+        setSolution(bfs_path.solution);
+      } else {
+        setSolution(null);
+      }
+    } else {
+      setSolution(null)
+    }
+  }, [from, to, data]);
 
   useEffect(() => {
     if (!ref.current || svg.current) return;
@@ -138,7 +153,7 @@ export default function ActorsNetwork(props) {
         simulationRef.current.stop();
       }
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (!svg.current || !simulationRef.current) return;
@@ -201,7 +216,7 @@ export default function ActorsNetwork(props) {
   }, [to, from, solution]);
 
   return (
-    <Container>
+    <Container sx={{marginBottom: 2}}>
       <Paper
         elevation={0}
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
