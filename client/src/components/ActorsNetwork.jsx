@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { Paper, Container } from '@mui/material';
+import { Paper, Container, Grid} from '@mui/material';
+import LinkDisplay from './LinkDisplay';
 
 function drag(simulationRef) {
   function dragstarted(event, d) {
@@ -32,7 +33,7 @@ export default function ActorsNetwork(props) {
   const ref = useRef(null);
   const svg = useRef(null);
   const simulationRef = useRef(null);
-  const width = 928;
+  const width = 600;
   const height = 600;
   const nodeRadius = 25;
 
@@ -97,7 +98,7 @@ export default function ActorsNetwork(props) {
         // Show the tooltip and set its content
         d3.select('#tooltip')
           .style('visibility', 'visible')
-          .html(`Name: ${d.name}<br>Born: ${d.birth}`)
+          .html(`${d.name}`)
           .style('left', event.pageX + 10 + 'px')
           .style('top', event.pageY - 10 + 'px');
       })
@@ -149,6 +150,16 @@ export default function ActorsNetwork(props) {
           d.id === to || d.id === from ? '#87CEEB' : 'black',
         )
         .attr('stroke-width', (d) => (d.id === to || d.id === from ? 4 : 0.8));
+
+      // Reset link colors and widths to default if no solution is found
+      if (!solution || solution.length === 0) {
+        svg.current
+          .selectAll('line')
+          .attr('stroke', '#999')
+          .attr('stroke-opacity', 0.8)
+          .attr('stroke-width', (d) => Math.sqrt(d.value));
+      }
+
       // Update link colors based on solution
       if (solution && solution.length > 0) {
         // Create link pairs starting from 'to' node
@@ -171,7 +182,7 @@ export default function ActorsNetwork(props) {
                 (d.source.id === pair[0] && d.target.id === pair[1]) ||
                 (d.source.id === pair[1] && d.target.id === pair[0]),
             );
-            return isPartOfSolution ? 'orange' : '#999';
+            return isPartOfSolution ? '#87CEEB' : '#999';
           })
           .attr('stroke-opacity', 1)
           .attr('stroke-width', (d) => {
@@ -195,19 +206,26 @@ export default function ActorsNetwork(props) {
         elevation={0}
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
-        <svg ref={ref} width={width} height={height}></svg>
-        <div
-          id='tooltip'
-          style={{
-            position: 'absolute',
-            visibility: 'hidden',
-            backgroundColor: 'white',
-            padding: '5px',
-            border: '1px solid lightgray',
-            borderRadius: '5px',
-            pointerEvents: 'none',
-          }}
-        ></div>
+        <Grid container spacing={1}>
+          <Grid item xs={8}>
+            <svg ref={ref} width={width} height={height}></svg>
+            <div
+              id='tooltip'
+              style={{
+                position: 'absolute',
+                visibility: 'hidden',
+                backgroundColor: 'white',
+                padding: '5px',
+                border: '1px solid lightgray',
+                borderRadius: '5px',
+                pointerEvents: 'none',
+              }}
+            ></div>
+          </Grid>
+          <Grid>
+            <LinkDisplay solution={solution} to={to} from={from} data={data} />
+          </Grid>
+        </Grid>
       </Paper>
     </Container>
   );

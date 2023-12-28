@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import shortestPath from '../utils/bfs';
+import ActorChip from './ActorChip';
 
 function DegreeOfSeparation() {
   const [inputs, setInputs] = useState({ from: '', to: '' });
@@ -15,12 +16,13 @@ function DegreeOfSeparation() {
 
   React.useEffect(() => {
     if (inputs.from && inputs.to) {
-      const bfs_path = shortestPath(inputs.from, inputs.to, data)
-      if (bfs_path.success){
+      const bfs_path = shortestPath(inputs.from, inputs.to, data);
+      if (bfs_path.success) {
         setSolution(bfs_path.solution);
         console.log(solution);
-      }else{
-        console.log("no solution found")
+      } else {
+        setSolution(null)
+        console.log('no solution found');
       }
     }
   }, [inputs]);
@@ -29,12 +31,25 @@ function DegreeOfSeparation() {
     <Container
       sx={{ justifyContent: 'center', alignItems: 'center', marginTop: 2 }}
     >
-      <h1 style={{color:"#330867"}}>Degrees of Separation: Data Structures and Algorithms Visualized</h1>
-      <p>You've likely heard of <a href='https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon' target='_blank'>Six Degrees of Kevin Bacon</a>,
-      A game in which an arbitrarily chosen actor's degree of separation is found via the movies they've acted in. Degrees of separation
-      is also a great way to learn some of the basic elements of data structures and algorithms. </p>
-      <p>First, lets take a look at the implemented degrees of separation finder. Select actors' names and 
-        see their degrees of separation. 
+      <h1 style={{ color: '#330867' }}>
+        Degrees of Separation: Data Structures and Algorithms Visualized
+      </h1>
+      <p>
+        You've likely heard of{' '}
+        <a
+          href='https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon'
+          target='_blank'
+        >
+          Six Degrees of Kevin Bacon
+        </a>
+        , A game in which an arbitrarily chosen actor's degree of separation is
+        found via the movies they've acted in. Degrees of separation is also a
+        great way to learn some of the basic elements of data structures and
+        algorithms.{' '}
+      </p>
+      <p>
+        First, lets take a look at the implemented degrees of separation finder.
+        Select actors' names and see their degrees of separation.
       </p>
       <div style={{ margin: '0 auto' }}>
         <FormControl sx={{ m: 1, minWidth: 300, height: '50px' }} size='small'>
@@ -53,20 +68,10 @@ function DegreeOfSeparation() {
               });
             }}
           >
-            {data.nodes.map((node) => {
+            {data.nodes.filter((node) => node.id !== inputs.to).map((node) => {
               return (
                 <MenuItem key={`from-${node.id}`} value={node.id}>
-                  <Chip
-                    avatar={
-                      <Avatar
-                        alt={node.name}
-                        src={node.img}
-                        sx={{ width: 24, height: 24 }}
-                      />
-                    }
-                    label={node.name}
-                    variant='outlined'
-                  />
+                  <ActorChip name={node.name} src={node.img} />
                 </MenuItem>
               );
             })}
@@ -91,20 +96,10 @@ function DegreeOfSeparation() {
               });
             }}
           >
-            {data.nodes.map((node) => {
+            {data.nodes.filter((node) => node.id !== inputs.from).map((node) => {
               return (
                 <MenuItem key={`to-${node.id}`} value={node.id}>
-                  <Chip
-                    avatar={
-                      <Avatar
-                        alt={node.name}
-                        src={node.img}
-                        sx={{ width: 24, height: 24 }}
-                      />
-                    }
-                    label={node.name}
-                    variant='outlined'
-                  />
+                  <ActorChip name={node.name} src={node.img} />
                 </MenuItem>
               );
             })}
@@ -113,7 +108,12 @@ function DegreeOfSeparation() {
       </div>
 
       <Paper>
-        <ActorsNetwork data={data} from={inputs.from} to={inputs.to} solution={solution} />
+        <ActorsNetwork
+          data={data}
+          from={inputs.from}
+          to={inputs.to}
+          solution={solution}
+        />
       </Paper>
     </Container>
   );
