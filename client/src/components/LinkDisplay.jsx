@@ -1,4 +1,4 @@
-import { Box, Stepper, Step, StepLabel, StepContent } from '@mui/material';
+import { Box, Stepper, Step } from '@mui/material';
 import React from 'react';
 import ActorChip from './ActorChip';
 
