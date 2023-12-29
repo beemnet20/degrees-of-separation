@@ -8,6 +8,7 @@ import {
   ToggleButtonGroup,
 } from '@mui/material';
 import ActorsNetwork from '../components/ActorsNetwork';
+import Explanation from './Explanation';
 import smallData from '../assets/small_data';
 import largeData from '../assets/large_data';
 import InputLabel from '@mui/material/InputLabel';
@@ -33,33 +34,35 @@ function DegreeOfSeparation() {
     setData(newData);
   }, [dataType]);
 
-
-
   return (
     <Container
       sx={{ justifyContent: 'center', alignItems: 'center', marginTop: 2 }}
     >
-      <h1 style={{ color: '#330867' }}>
+      <h1>
         Degrees of Separation: Data Structures and Algorithms Visualized
       </h1>
-      <p>
-        You've likely heard of{' '}
-        <a
-          href='https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon'
-          target='_blank'
-          rel='noreferrer'
-        >
-          Six Degrees of Kevin Bacon
-        </a>
-        , A game in which an arbitrarily chosen actor's degree of separation is
-        found via the movies they've acted in. Degrees of separation is also a
-        great way to learn some of the basic elements of data structures and
-        algorithms.
-      </p>
-      <p>
-        First, lets take a look at the implemented degrees of separation finder.
-        Select actors' names and see their degrees of separation.
-      </p>
+      <article>
+        <p>
+          You've likely heard of{' '}
+          <a
+            href='https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Six Degrees of Kevin Bacon
+          </a>
+          , A game in which an arbitrarily chosen actor's degree of separation
+          is found via the movies they've acted in. Degrees of separation is
+          also a great way to learn some of the basic elements of data
+          structures and algorithms.
+        </p>
+        <p>
+          First, lets take a look at the implemented degrees of separation
+          finder. Select actors' names and see their degrees of separation.
+          Select from the drop down of actors names to find the degrees of separation 
+          between them. You can toggle between the small and large datasets. 
+        </p>
+      </article>
 
       <Grid
         m={2}
@@ -103,8 +106,8 @@ function DegreeOfSeparation() {
             >
               {data.nodes
                 .sort((a, b) => {
-                  const nameA = a.name.toUpperCase(); 
-                  const nameB = b.name.toUpperCase(); 
+                  const nameA = a.name.toUpperCase();
+                  const nameB = b.name.toUpperCase();
                   if (nameA < nameB) {
                     return -1;
                   }
@@ -146,8 +149,8 @@ function DegreeOfSeparation() {
             >
               {data.nodes
                 .sort((a, b) => {
-                  const nameA = a.name.toUpperCase(); 
-                  const nameB = b.name.toUpperCase(); 
+                  const nameA = a.name.toUpperCase();
+                  const nameB = b.name.toUpperCase();
                   if (nameA < nameB) {
                     return -1;
                   }
@@ -177,6 +180,7 @@ function DegreeOfSeparation() {
           to={inputs.to}
         />
       </Paper>
+      <Explanation data={smallData}/>
     </Container>
   );
 }
