@@ -14,7 +14,7 @@ export default function LinkDisplay(props) {
   }
   if (to && from && solution && solution.length > 0) {
     return (
-      <Box m={2}>
+      <Box m={2} >
         <h4>{solution.length} degrees of separation</h4>
         <Stepper orientation='vertical'>
           <Step key={from} active={true}>
@@ -31,13 +31,12 @@ export default function LinkDisplay(props) {
                 : null;
             const name = data.people[row[1]].name;
             const src = findImgURL(data, row[1]);
-            console.log(movie);
             return (
               <>
                 <Step key={index} active={true}>
-                  <ActorChip src={src} name={name} />
+                  <ActorChip key={`${index}-${name}`} src={src} name={name} />
                 </Step>
-                {movie && <Step>{movie}</Step>}
+                {movie && <Step key={movie}>{movie}</Step>}
               </>
             );
           })}

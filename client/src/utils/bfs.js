@@ -71,17 +71,35 @@ export default function shortestPath(source, target, data) {
 
   // Initialize an empty explored set to contain actor ids
   let explored = new Set();
+
+  let steps = [];
+  steps.push({
+    frontier: frontier.frontier.map((n) => n.state),
+    explored: Array.from(explored),
+    current: null, // Placeholder, will be set after removing the node
+    solutionFound: false,
+  });
+
   // Keep looping until solution found
   while (true) {
     // If nothing left in frontier, then no path
     if (frontier.isEmpty()) {
-      return {success:false};
+      return { success: false };
     }
+    // Inside your while loop, just before removing the node from the frontier
+    steps.push({
+      frontier: frontier.frontier.map((n) => n.state),
+      explored: Array.from(explored),
+      current: null, // Placeholder, will be set after removing the node
+      solutionFound: false,
+    });
 
-    // Choose a node from the frontier
+    // Now remove the node and set the current state
     let node = frontier.remove();
-    // Mark node as explored
+    steps[steps.length - 1].current = node.state;
+    // Choose a node from the frontier
     explored.add(node.state);
+
 
     // Add neighbors to frontier
     const neighbors = neighborsForPerson(node.state, data);
@@ -95,7 +113,13 @@ export default function shortestPath(source, target, data) {
             node = node.parent;
           }
           shortestPath.reverse();
-          return {success:true, solution:shortestPath};
+          steps.push({
+            frontier: frontier.frontier.map((n) => n.state),
+            explored: Array.from(explored),
+            current: target,  // This is the node being processed in this step
+            solutionFound: true
+          });
+          return { success: true, solution: shortestPath, steps: steps };
         }
         let child = new Node(state, node, action);
         frontier.add(child);

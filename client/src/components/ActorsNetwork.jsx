@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { Paper, Container, Grid} from '@mui/material';
+import { Paper, Container, Grid } from '@mui/material';
 import LinkDisplay from './LinkDisplay';
 import shortestPath from '../utils/bfs';
 
@@ -30,12 +30,12 @@ function drag(simulationRef) {
 }
 
 export default function ActorsNetwork(props) {
-  const { data, from, to } = props;
-  const [solution, setSolution] = useState(null)
+  const { data, from, to, highlight, hideLinks, small } = props;
+  const [solution, setSolution] = useState(null);
   const ref = useRef(null);
   const svg = useRef(null);
   const simulationRef = useRef(null);
-  const width = 700;
+  const width = small ? 300 : 700;
   const height = 600;
   const nodeRadius = 25;
 
@@ -44,11 +44,12 @@ export default function ActorsNetwork(props) {
       const bfs_path = shortestPath(from, to, data);
       if (bfs_path.success) {
         setSolution(bfs_path.solution);
+        console.log(bfs_path);
       } else {
         setSolution(null);
       }
     } else {
-      setSolution(null)
+      setSolution(null);
     }
   }, [from, to, data]);
 
@@ -64,7 +65,7 @@ export default function ActorsNetwork(props) {
     data.nodes.forEach((node, index) => {
       defs
         .append('pattern')
-        .attr('id', `image${index}`)
+        .attr('id', `image${node.id}`)
         .attr('width', 1)
         .attr('height', 1)
         .append('image')
@@ -107,7 +108,7 @@ export default function ActorsNetwork(props) {
       .data(data.nodes)
       .join('circle')
       .attr('r', nodeRadius)
-      .attr('fill', (d, i) => `url(#image${i})`)
+      .attr('fill', (d, i) => `url(#image${d.id})`)
       .call(drag(simulationRef))
       .on('mouseover', (event, d) => {
         // Show the tooltip and set its content
@@ -162,9 +163,18 @@ export default function ActorsNetwork(props) {
       svg.current
         .selectAll('circle')
         .attr('stroke', (d) =>
-          d.id === to || d.id === from ? '#87CEEB' : 'black',
+          d.id === to || d.id === from || (solution && solution.map((row) => row[1]).includes(d.id)) ? '#87CEEB' : 'black',
         )
-        .attr('stroke-width', (d) => (d.id === to || d.id === from ? 4 : 0.8));
+        .attr('stroke-width', (d) => (d.id === to || d.id === from || (solution && solution.map((row) => row[1]).includes(d.id)) ? 4 : 0.8));
+
+      if (highlight) {
+        svg.current
+          .selectAll('circle')
+          .attr('stroke', (d) =>
+            highlight.includes(d.id) ? '#87CEEB' : 'black',
+          )
+          .attr('stroke-width', (d) => (highlight.includes(d.id) ? 4 : 0.8));
+      }
 
       // Reset link colors and widths to default if no solution is found
       if (!solution || solution.length === 0) {
@@ -213,10 +223,10 @@ export default function ActorsNetwork(props) {
     };
 
     updateGraph();
-  }, [to, from, solution]);
+  }, [to, from, solution, highlight]);
 
   return (
-    <Container sx={{marginBottom: 2}}>
+    <Container sx={{ marginBottom: 2 }}>
       <Paper
         elevation={0}
         sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
@@ -237,9 +247,22 @@ export default function ActorsNetwork(props) {
               }}
             ></div>
           </Grid>
-          <Grid>
-            <LinkDisplay solution={solution} to={to} from={from} data={data} />
-          </Grid>
+          {!hideLinks && (
+            <Grid
+              lg={4}
+              xs={12}
+              item
+              justifyContent='center'
+              alignItems='center'
+            >
+              <LinkDisplay
+                solution={solution}
+                to={to}
+                from={from}
+                data={data}
+              />
+            </Grid>
+          )}
         </Grid>
       </Paper>
     </Container>

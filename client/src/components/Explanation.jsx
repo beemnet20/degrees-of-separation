@@ -1,55 +1,7 @@
 import React from 'react';
-import { Avatar } from '@mui/material';
 
-const Node = ({ node }) => (
-  <div
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <Avatar sx={{ border: '1px black solid' }} src={node.img} alt={node.name} />
-  </div>
-);
+import {Node, Queue, Edge} from './BFSElements'
 
-const Edge = ({ from, to }) => (
-  <div
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <Node node={from} />
-    <span
-      style={{
-        margin: '0',
-        width: '100px',
-        height: '0px',
-        border: '1px black solid',
-      }}
-    ></span>
-    <Node node={to} />
-  </div>
-);
-
-const Queue = ({ nodes }) => (
-  <div
-    style={{
-      display: 'flex',
-      overflowX: 'auto',
-      border: '1px solid black',
-      padding: '10px',
-    }}
-  >
-    {nodes.map((node, index) => (
-      <div key={index} style={{ marginRight: '10px' }}>
-        <Node node={node} />
-      </div>
-    ))}
-  </div>
-);
 
 export default function Explanation({ data }) {
   //get the nodes for Kevin Bacon, Tom Cruise, and Tom Hanks
@@ -171,3 +123,4 @@ export default function Explanation({ data }) {
     </>
   );
 }
+
