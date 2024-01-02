@@ -8,8 +8,8 @@ import ActorChip from './ActorChip';
 export default function Visualizer({ data }) {
   const from = '163';
   const to = '158';
-  const fromNode = data.nodes.find((node) => node.id === from)
-  const toNode = data.nodes.find((node) => node.id === to)
+  const fromNode = data.nodes.find((node) => node.id === from);
+  const toNode = data.nodes.find((node) => node.id === to);
 
   const bfs_solution = shortestPath(from, to, data);
   console.log(bfs_solution);
@@ -28,24 +28,25 @@ export default function Visualizer({ data }) {
   };
 
   useEffect(() => {
-    const step = bfs_solution.steps[index];
+    if (data.nodes && bfs_solution.steps) {
+      const step = bfs_solution.steps[index];
 
-    // Set the current node
-    const currentNode = data.nodes.find(node => node.id === step.current);
-    setCurrent(currentNode);
+      // Set the current node
+      const currentNode = data.nodes.find((node) => node.id === step.current);
+      setCurrent(currentNode);
 
-    // Update frontier and explored nodes based on the current step
-    setFrontier(
-      step.frontier.map((id) => data.nodes.find((node) => node.id === id))
-    );
-    setExplored(
-      step.explored.map((id)=> data.nodes.find((node) => node.id === id))
-    );
-    setSolutionFound(step.solutionFound);
+      // Update frontier and explored nodes based on the current step
+      setFrontier(
+        step.frontier.map((id) => data.nodes.find((node) => node.id === id)),
+      );
+      setExplored(
+        step.explored.map((id) => data.nodes.find((node) => node.id === id)),
+      );
+      setSolutionFound(step.solutionFound);
 
-    setHighlight(step.current);
-
-  }, [index]);
+      setHighlight(step.current);
+    }
+  }, [index, bfs_solution.steps, data.nodes]);
 
   return (
     <Container sx={{ marginBottom: 2 }}>
@@ -53,7 +54,7 @@ export default function Visualizer({ data }) {
         <Box sx={{ padding: 1 }}>
           <h3>
             Lets visualize the steps to find the defrees of separation between{' '}
-            {<ActorChip name={fromNode.name} src={fromNode.img} />} and 
+            {<ActorChip name={fromNode.name} src={fromNode.img} />} and
             {<ActorChip name={toNode.name} src={toNode.img} />}.
           </h3>
           <p>
@@ -76,7 +77,7 @@ export default function Visualizer({ data }) {
               <Grid item>
                 <h4> Target</h4>
 
-                <Node node={data.nodes.filter(node => node.id === to)[0]} />
+                <Node node={data.nodes.filter((node) => node.id === to)[0]} />
               </Grid>
             </Grid>
             <h4>Frontier</h4>

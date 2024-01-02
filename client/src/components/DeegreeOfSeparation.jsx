@@ -198,7 +198,7 @@ function DegreeOfSeparation() {
           >
             Harvards CS50 AI class project
           </a>
-          . The code for this project can be found in my GitHub repo{' '}
+          . This project implements the soution to the AI class' project in JavaScript and adds UI elements in React. The code for this project can be found in my GitHub repo{' '}
           <a rel='noreferrer' target='_blank' href='https://github.com/beemnet20/degrees-of-separation'>
             here
           </a>
