@@ -53,8 +53,8 @@ export default function Visualizer({ data }) {
       <Paper>
         <Box sx={{ padding: 1 }}>
           <h3>
-            Lets visualize the steps to find the defrees of separation between{' '}
-            {<ActorChip name={fromNode.name} src={fromNode.img} />} and
+            Lets visualize the steps to find the defrees of separation between {' '}
+            {<ActorChip name={fromNode.name} src={fromNode.img} />} and {' '}
             {<ActorChip name={toNode.name} src={toNode.img} />}.
           </h3>
           <p>
