@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
+import GitHubIcon from '@mui/icons-material/GitHub'
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
@@ -33,8 +34,17 @@ export default function Header() {
                 {/* Icons Chip */}
                 <Chip
                   variant='outlined'
-                  label={<LinkedInIcon />} // Removed <strong> and <a> for simplicity
-                  sx={{ minWidth: '35px', maxWidth: '50px',cursor: 'pointer' }} // Adjusted size
+                  label={<GitHubIcon />} 
+                  sx={{ minWidth: '35px', maxWidth: '50px',cursor: 'pointer' }} 
+                  component="a"
+                  href='https://github.com/beemnet20'
+                  target='_blank'
+                  rel='noreferrer'
+                />
+                <Chip
+                  variant='outlined'
+                  label={<LinkedInIcon />}
+                  sx={{ minWidth: '35px', maxWidth: '50px',cursor: 'pointer' }} 
                   component="a"
                   href='https://www.linkedin.com/in/beemnet-workeneh-25b579b3/'
                   target='_blank'
