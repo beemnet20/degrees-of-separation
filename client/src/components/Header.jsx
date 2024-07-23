@@ -73,7 +73,7 @@ export default function Header() {
                 sx={{ width: '20%', minWidth: '80px', justifyContent: 'flex-start' , cursor: 'pointer'}} // Adjusted minWidth
                 label={<strong>Portfolio</strong>}
                 component="a"
-                href='https://beemnet17.wixsite.com/beemnetworkeneh'
+                href='https://beemnet20.github.io/portfolio/'
                 target='_blank'
                 rel='noreferrer'
               />
